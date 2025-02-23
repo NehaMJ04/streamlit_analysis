@@ -111,6 +111,14 @@ if page == "Data Analysis":
 elif page == "Car Recommendation AI":
     st.title("Car Recommendation AI")
     
+    # Debugging: Print column names and data types
+    st.write("Columns in merged_df:", merged_df.columns)
+    st.write("Data types in merged_df:", merged_df.dtypes)
+    
+    # Handle missing values and convert Price_USD to numeric
+    merged_df = merged_df.dropna(subset=['Price_USD'])
+    merged_df['Price_USD'] = pd.to_numeric(merged_df['Price_USD'], errors='coerce')
+    
     # User inputs
     st.sidebar.header("Filter Options")
     location = st.sidebar.selectbox("Preferred Location", merged_df['Location'].unique())
