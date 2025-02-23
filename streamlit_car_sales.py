@@ -4,8 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Set the colorblind palette globally
-sns.set_palette("colorblind")
-plt.style.use("seaborn-colorblind")
+sns.set_palette("colorblind")  # Use Seaborn's colorblind-friendly palette
 
 # Load data
 @st.cache_data
