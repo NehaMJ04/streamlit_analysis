@@ -122,7 +122,7 @@ if page == "Data Analysis":
         resale_values = merged_df.groupby("Fuel_Type")["Price_USD"].median()
         
         # Create a pie chart
-        plt.figure(figsize=(8, 8))
+        plt.figure(figsize=(4, 4))
         plt.pie(resale_values, labels=resale_values.index, autopct='%1.1f%%', startangle=140, colors=sns.color_palette("colorblind"))
         plt.title("Average Resale Value by Fuel Type (Pie Chart)")
         st.pyplot(plt.gcf())
