@@ -105,3 +105,24 @@ if page == "Data Analysis":
     elif selected_analysis == "EV Listings by Year":
         ev_by_year = ev_cars["Year"].value_counts()
         st.bar_chart(ev_by_year)
+
+# Car Recommendation AI Page
+elif page == "Car Recommendation AI":
+    st.title("Car Recommendation AI")
+    
+    # User inputs
+    st.sidebar.header("Filter Options")
+    location = st.sidebar.selectbox("Preferred Location", merged_df['Location'].unique())
+    brand = st.sidebar.selectbox("Preferred Brand", merged_df['Brand'].unique())
+    transmission = st.sidebar.selectbox("Preferred Transmission", merged_df['Transmission'].unique())
+    
+    # Filter data based on user inputs
+    filtered_df = merged_df[(merged_df['Location'] == location) & 
+                            (merged_df['Brand'] == brand) & 
+                            (merged_df['Transmission'] == transmission)]
+    
+    if not filtered_df.empty:
+        st.write(f"Recommended Cars in {location} for {brand} with {transmission} transmission:")
+        st.dataframe(filtered_df[['Model', 'Year', 'Mileage_km', 'Price_USD']])
+    else:
+        st.write("No cars match your criteria. Please adjust your filters.")
