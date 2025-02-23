@@ -89,6 +89,7 @@ if page == "Data Analysis":
         transmission_counts = merged_df["Transmission"].value_counts()
         st.bar_chart(transmission_counts)
     elif selected_analysis == "Depreciation: Average Price of Cars by Age":
+        merged_df["Car_Age"] = 2024 - merged_df["Year"]
         age_price = merged_df.groupby("Car_Age")["Price_USD"].mean()
         st.line_chart(age_price)
     elif selected_analysis == "Car Brands with the Best Mileage-to-Price Ratio":
