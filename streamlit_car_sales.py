@@ -103,14 +103,13 @@ if page == "Data Analysis":
         yearly_sales = car_details["Year"].value_counts()
         st.bar_chart(yearly_sales)
     elif selected_analysis == "EV Distribution by Location":
+        # Filter electric vehicles
+        ev_cars = car_details[car_details["Fuel_Type"].str.contains("Electric", case=False, na=False)]
         ev_by_location = ev_cars["Location"].value_counts()
-        plt.figure(figsize=(10, 5))
-        sns.barplot(x=ev_by_location.index, y=ev_by_location.values, hue=ev_by_location.index, palette="colorblind", legend=False)
-        plt.title("EV Distribution by Location")
-        plt.xlabel("Location")
-        plt.ylabel("Number of EVs")
-        plt.xticks(rotation=45)
-        st.pyplot(plt.gcf()) 
+        
+        # Plot EV distribution by location
+        st.bar_chart(ev_by_location)
+
     elif selected_analysis == "EV Listings by Year":
         # Define ev_cars for EV analysis
         ev_cars = car_details[car_details["Fuel_Type"].str.contains("Electric", case=False, na=False)]
