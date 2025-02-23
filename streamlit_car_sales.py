@@ -64,6 +64,14 @@ if page == "Data Analysis":
         st.write("Brand and Transmission Types:")
         st.dataframe(brand_transmission_df)
     
+    elif selected_analysis == "Most Popular Brand by Location":
+        popular_brands_by_location = car_details.groupby(["Location", "Brand"]).size().reset_index(name="Count")
+        popular_brands = popular_brands_by_location.loc[popular_brands_by_location.groupby("Location")["Count"].idxmax()]
+        
+        # Display the data in a table
+        st.write("Most Popular Brand by Location:")
+        st.dataframe(popular_brands)
+    
     elif selected_analysis == "Average Mileage per Fuel Type":
         avg_mileage = car_details.groupby('Fuel_Type')['Mileage_km'].mean()
         
@@ -80,6 +88,45 @@ if page == "Data Analysis":
         )
         st.plotly_chart(fig, use_container_width=True)
     
+    elif selected_analysis == "Basic Statistical Summary":
+        st.write("Price Dataset Description:")
+        st.write(price_cardetails.describe())
+        
+        st.write("Car Details Dataset Description:")
+        st.write(car_details.describe())
+    
+    elif selected_analysis == "Most Common Transmission Type in Recent Years":
+        recent_transmission = car_details[car_details['Year'] >= 2020]['Transmission'].value_counts()
+        
+        # Create an interactive bar chart with Plotly
+        fig = px.bar(
+            recent_transmission, 
+            x=recent_transmission.index, 
+            y=recent_transmission.values, 
+            labels={'x': 'Transmission Type', 'y': 'Number of Cars'},
+            title="Most Common Transmission Type in Recent Years",
+            text=recent_transmission.values,
+            color=recent_transmission.index,  # Use color for better distinction
+            color_discrete_sequence=plotly.colors.qualitative.Plotly  # Colorblind-friendly palette
+        )
+        st.plotly_chart(fig, use_container_width=True)
+    
+    elif selected_analysis == "Top 10 Locations with Most Cars Listed":
+        top_locations = car_details['Location'].value_counts().head(10)
+        
+        # Create an interactive bar chart with Plotly
+        fig = px.bar(
+            top_locations, 
+            x=top_locations.index, 
+            y=top_locations.values, 
+            labels={'x': 'Location', 'y': 'Number of Cars'},
+            title="Top 10 Locations with Most Cars Listed",
+            text=top_locations.values,
+            color=top_locations.index,  # Use color for better distinction
+            color_discrete_sequence=plotly.colors.qualitative.Plotly  # Colorblind-friendly palette
+        )
+        st.plotly_chart(fig, use_container_width=True)
+    
     elif selected_analysis == "Count of Cars by Fuel Type":
         fuel_counts = merged_df["Fuel_Type"].value_counts()
         
@@ -89,6 +136,140 @@ if page == "Data Analysis":
             values=fuel_counts.values, 
             names=fuel_counts.index, 
             title="Count of Cars by Fuel Type",
+            color_discrete_sequence=plotly.colors.qualitative.Plotly  # Colorblind-friendly palette
+        )
+        st.plotly_chart(fig, use_container_width=True)
+    
+    elif selected_analysis == "Common Price Range for Each Car Model":
+        price_summary = merged_df.groupby("Model")["Price_USD"].describe()
+        
+        # Display the data in a table
+        st.write("Common Price Range for Each Car Model:")
+        st.dataframe(price_summary)
+    
+    elif selected_analysis == "Most Expensive Car Models":
+        expensive_models = merged_df.groupby("Model")["Price_USD"].mean().sort_values(ascending=False).head(10)
+        
+        # Display the data in a table
+        st.write("Most Expensive Car Models:")
+        st.dataframe(expensive_models)
+    
+    elif selected_analysis == "Correlation Between Car Age and Price":
+        merged_df["Car_Age"] = 2024 - merged_df["Year"]
+        correlation = merged_df[["Car_Age", "Price_USD"]].corr()
+        
+        # Display the correlation matrix
+        st.write("Correlation Between Car Age and Price:")
+        st.write(correlation)
+    
+    elif selected_analysis == "Average Price of Automatic vs Manual Cars":
+        avg_price_transmission = merged_df.groupby("Transmission")["Price_USD"].mean()
+        
+        # Create an interactive bar chart with Plotly
+        fig = px.bar(
+            avg_price_transmission, 
+            x=avg_price_transmission.index, 
+            y=avg_price_transmission.values, 
+            labels={'x': 'Transmission Type', 'y': 'Average Price (USD)'},
+            title="Average Price of Automatic vs Manual Cars",
+            text=avg_price_transmission.values.round(2),
+            color=avg_price_transmission.index,  # Use color for better distinction
+            color_discrete_sequence=plotly.colors.qualitative.Plotly  # Colorblind-friendly palette
+        )
+        st.plotly_chart(fig, use_container_width=True)
+    
+    elif selected_analysis == "Top 5 Brands with Highest Resale Values":
+        resale_values = merged_df.groupby("Brand")["Price_USD"].median().sort_values(ascending=False).head(5)
+        
+        # Create an interactive bar chart with Plotly
+        fig = px.bar(
+            resale_values, 
+            x=resale_values.index, 
+            y=resale_values.values, 
+            labels={'x': 'Brand', 'y': 'Median Resale Price (USD)'},
+            title="Top 5 Brands with Highest Resale Values",
+            text=resale_values.values.round(2),
+            color=resale_values.index,  # Use color for better distinction
+            color_discrete_sequence=plotly.colors.qualitative.Plotly  # Colorblind-friendly palette
+        )
+        st.plotly_chart(fig, use_container_width=True)
+    
+    elif selected_analysis == "Engine Size vs Average Price":
+        eng = merged_df.groupby("Engine_cc")["Price_USD"].mean()
+        
+        # Create an interactive bar chart with Plotly
+        fig = px.bar(
+            eng, 
+            x=eng.index, 
+            y=eng.values, 
+            labels={'x': 'Engine Size (cc)', 'y': 'Average Price (USD)'},
+            title="Engine Size vs Average Price",
+            text=eng.values.round(2),
+            color=eng.index,  # Use color for better distinction
+            color_discrete_sequence=plotly.colors.qualitative.Plotly  # Colorblind-friendly palette
+        )
+        st.plotly_chart(fig, use_container_width=True)
+    
+    elif selected_analysis == "Average Resale Value by Fuel Type":
+        resale_values = merged_df.groupby("Fuel_Type")["Price_USD"].median()
+        
+        # Create an interactive bar chart with Plotly
+        fig = px.bar(
+            resale_values, 
+            x=resale_values.index, 
+            y=resale_values.values, 
+            labels={'x': 'Fuel Type', 'y': 'Median Resale Price (USD)'},
+            title="Average Resale Value by Fuel Type",
+            text=resale_values.values.round(2),
+            color=resale_values.index,  # Use color for better distinction
+            color_discrete_sequence=plotly.colors.qualitative.Plotly  # Colorblind-friendly palette
+        )
+        st.plotly_chart(fig, use_container_width=True)
+    
+    elif selected_analysis == "Average Price by Car Brand":
+        price_by_brand = merged_df.groupby("Brand")["Price_USD"].mean()
+        
+        # Create an interactive bar chart with Plotly
+        fig = px.bar(
+            price_by_brand, 
+            x=price_by_brand.index, 
+            y=price_by_brand.values, 
+            labels={'x': 'Brand', 'y': 'Average Price (USD)'},
+            title="Average Price by Car Brand",
+            text=price_by_brand.values.round(2),
+            color=price_by_brand.index,  # Use color for better distinction
+            color_discrete_sequence=plotly.colors.qualitative.Plotly  # Colorblind-friendly palette
+        )
+        st.plotly_chart(fig, use_container_width=True)
+    
+    elif selected_analysis == "Transmission Type vs Number of Cars":
+        transmission_counts = merged_df["Transmission"].value_counts()
+        
+        # Create an interactive bar chart with Plotly
+        fig = px.bar(
+            transmission_counts, 
+            x=transmission_counts.index, 
+            y=transmission_counts.values, 
+            labels={'x': 'Transmission Type', 'y': 'Number of Cars'},
+            title="Transmission Type vs Number of Cars",
+            text=transmission_counts.values,
+            color=transmission_counts.index,  # Use color for better distinction
+            color_discrete_sequence=plotly.colors.qualitative.Plotly  # Colorblind-friendly palette
+        )
+        st.plotly_chart(fig, use_container_width=True)
+    
+    elif selected_analysis == "Depreciation: Average Price of Cars by Age":
+        merged_df["Car_Age"] = 2024 - merged_df["Year"]
+        age_price = merged_df.groupby("Car_Age")["Price_USD"].mean()
+        
+        # Create an interactive line chart with Plotly
+        fig = px.line(
+            age_price, 
+            x=age_price.index, 
+            y=age_price.values, 
+            labels={'x': 'Car Age (Years)', 'y': 'Average Price (USD)'},
+            title="Depreciation: Average Price of Cars by Age",
+            markers=True,
             color_discrete_sequence=plotly.colors.qualitative.Plotly  # Colorblind-friendly palette
         )
         st.plotly_chart(fig, use_container_width=True)
@@ -113,6 +294,22 @@ if page == "Data Analysis":
         # Display the list of ratios
         st.write("Mileage-to-Price Ratios by Brand:")
         st.write(brand_mileage_price_ratio)
+    
+    elif selected_analysis == "Number of Cars Sold Each Year":
+        yearly_sales = car_details["Year"].value_counts().sort_index()
+        
+        # Create an interactive bar chart with Plotly
+        fig = px.bar(
+            yearly_sales, 
+            x=yearly_sales.index, 
+            y=yearly_sales.values, 
+            labels={'x': 'Year', 'y': 'Number of Cars'},
+            title="Number of Cars Sold Each Year",
+            text=yearly_sales.values,
+            color=yearly_sales.index,  # Use color for better distinction
+            color_discrete_sequence=plotly.colors.qualitative.Plotly  # Colorblind-friendly palette
+        )
+        st.plotly_chart(fig, use_container_width=True)
     
     elif selected_analysis == "Price Trends Over Years":
         merged_df["Car_Age"] = 2024 - merged_df["Year"]
