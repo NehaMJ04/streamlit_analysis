@@ -137,7 +137,18 @@ if page == "Data Analysis":
     
     elif selected_analysis == "Transmission Type in Each Location":
         transmission_by_location = car_details.groupby(["Location", "Transmission"]).size().reset_index(name="Count")
-        st.bar_chart(transmission_by_location, x="Location", y="Count", hue="Transmission")
+        
+        # Create a Seaborn bar plot
+        plt.figure(figsize=(12, 6))
+        sns.barplot(x="Location", y="Count", hue="Transmission", data=transmission_by_location, palette="colorblind")
+        plt.title("Transmission Types in Each Location")
+        plt.xlabel("Location")
+        plt.ylabel("Number of Cars")
+        plt.xticks(rotation=45)
+        plt.legend(title="Transmission Type")
+        
+        # Display the plot in Streamlit
+        st.pyplot(plt.gcf())
     
     elif selected_analysis == "EV Listings by Year":
         ev_cars = car_details[car_details["Fuel_Type"].str.contains("Electric", case=False, na=False)]
