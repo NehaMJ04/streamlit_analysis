@@ -74,7 +74,12 @@ if page == "Data Analysis":
     
     elif selected_analysis == "Count of Cars by Fuel Type":
         fuel_counts = merged_df["Fuel_Type"].value_counts()
-        st.bar_chart(fuel_counts)
+        
+        # Create a pie chart
+        plt.figure(figsize=(8, 8))
+        plt.pie(fuel_counts, labels=fuel_counts.index, autopct='%1.1f%%', startangle=140, colors=sns.color_palette("colorblind"))
+        plt.title("Count of Cars by Fuel Type")
+        st.pyplot(plt.gcf())
     
     elif selected_analysis == "Common Price Range for Each Car Model":
         st.write(merged_df.groupby("Model")["Price_USD"].describe())
@@ -101,7 +106,12 @@ if page == "Data Analysis":
     
     elif selected_analysis == "Average Resale Value by Fuel Type":
         resale_values = merged_df.groupby("Fuel_Type")["Price_USD"].median()
-        st.bar_chart(resale_values)
+        
+        # Create a pie chart
+        plt.figure(figsize=(8, 8))
+        plt.pie(resale_values, labels=resale_values.index, autopct='%1.1f%%', startangle=140, colors=sns.color_palette("colorblind"))
+        plt.title("Average Resale Value by Fuel Type")
+        st.pyplot(plt.gcf())
     
     elif selected_analysis == "Average Price by Car Brand":
         price_by_brand = merged_df.groupby("Brand")["Price_USD"].mean()
@@ -109,7 +119,12 @@ if page == "Data Analysis":
     
     elif selected_analysis == "Transmission Type vs Number of Cars":
         transmission_counts = merged_df["Transmission"].value_counts()
-        st.bar_chart(transmission_counts)
+        
+        # Create a pie chart
+        plt.figure(figsize=(8, 8))
+        plt.pie(transmission_counts, labels=transmission_counts.index, autopct='%1.1f%%', startangle=140, colors=sns.color_palette("colorblind"))
+        plt.title("Transmission Type vs Number of Cars")
+        st.pyplot(plt.gcf())
     
     elif selected_analysis == "Depreciation: Average Price of Cars by Age":
         merged_df["Car_Age"] = 2024 - merged_df["Year"]
@@ -133,7 +148,12 @@ if page == "Data Analysis":
     elif selected_analysis == "EV Distribution by Location":
         ev_cars = car_details[car_details["Fuel_Type"].str.contains("Electric", case=False, na=False)]
         ev_by_location = ev_cars["Location"].value_counts()
-        st.bar_chart(ev_by_location)
+        
+        # Create a pie chart
+        plt.figure(figsize=(8, 8))
+        plt.pie(ev_by_location, labels=ev_by_location.index, autopct='%1.1f%%', startangle=140, colors=sns.color_palette("colorblind"))
+        plt.title("EV Distribution by Location")
+        st.pyplot(plt.gcf())
     
     elif selected_analysis == "Transmission Type in Each Location":
         transmission_by_location = car_details.groupby(["Location", "Transmission"]).size().reset_index(name="Count")
@@ -153,7 +173,15 @@ if page == "Data Analysis":
     elif selected_analysis == "EV Listings by Year":
         ev_cars = car_details[car_details["Fuel_Type"].str.contains("Electric", case=False, na=False)]
         ev_by_year = ev_cars["Year"].value_counts().sort_index()
-        st.bar_chart(ev_by_year)
+        
+        # Create a bar chart
+        plt.figure(figsize=(10, 5))
+        sns.barplot(x=ev_by_year.index, y=ev_by_year.values, palette="colorblind")
+        plt.title("EV Listings by Year")
+        plt.xlabel("Year")
+        plt.ylabel("Number of EVs")
+        plt.xticks(rotation=45)
+        st.pyplot(plt.gcf())
 
 # Car Recommendation AI Page
 elif page == "Car Recommendation AI":
