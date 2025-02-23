@@ -323,4 +323,16 @@ elif page == "Car Recommendation AI":
     max_price = st.sidebar.slider("Maximum Price (USD)", int(merged_df['Price_USD'].min()), int(merged_df['Price_USD'].max()))
     
     # Filter data based on user inputs
-    filtered_df = merged_df[(merged_df['Location'] ==
+    filtered_df = merged_df[
+        (merged_df['Location'] == location) & 
+        (merged_df['Brand'] == brand) & 
+        (merged_df['Transmission'] == transmission) & 
+        (merged_df['Price_USD'] >= min_price) & 
+        (merged_df['Price_USD'] <= max_price)
+    ]
+    
+    if not filtered_df.empty:
+        st.write(f"Recommended Cars in {location} for {brand} with {transmission} transmission:")
+        st.dataframe(filtered_df[['Model', 'Year', 'Mileage_km', 'Price_USD']])
+    else:
+        st.write("No cars match your criteria. Please adjust your filters.")
