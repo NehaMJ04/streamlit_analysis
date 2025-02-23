@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import plotly.graph_objects as go
+import plotly.colors
 
 # Load data
 @st.cache_data
@@ -44,34 +44,25 @@ if page == "Data Analysis":
             y=top_brands.values, 
             labels={'x': 'Brand', 'y': 'Number of Cars'},
             title="Most Common Car Brands",
-            text=top_brands.values
+            text=top_brands.values,
+            color=top_brands.index,  # Use color for better distinction
+            color_discrete_sequence=plotly.colors.qualitative.Plotly  # Colorblind-friendly palette
         )
-        fig.update_traces(marker_color='#1f77b4')  # Use a colorblind-friendly color
         st.plotly_chart(fig, use_container_width=True)
     
-    elif selected_analysis == "Count of Cars by Fuel Type":
-        fuel_counts = merged_df["Fuel_Type"].value_counts()
+    elif selected_analysis == "Brand and Models":
+        brand_model_df = car_details.groupby("Brand")["Model"].unique().reset_index()
         
-        # Create an interactive pie chart with Plotly
-        fig = px.pie(
-            fuel_counts, 
-            values=fuel_counts.values, 
-            names=fuel_counts.index, 
-            title="Count of Cars by Fuel Type"
-        )
-        st.plotly_chart(fig, use_container_width=True)
+        # Display the data in a table
+        st.write("Brand and Models:")
+        st.dataframe(brand_model_df)
+    
+    elif selected_analysis == "Brand and Transmission Types":
+        brand_transmission_df = car_details.groupby("Brand")["Transmission"].unique().reset_index()
         
-        # Create an interactive bar chart with Plotly
-        fig = px.bar(
-            fuel_counts, 
-            x=fuel_counts.index, 
-            y=fuel_counts.values, 
-            labels={'x': 'Fuel Type', 'y': 'Number of Cars'},
-            title="Count of Cars by Fuel Type",
-            text=fuel_counts.values
-        )
-        fig.update_traces(marker_color='#1f77b4')  # Use a colorblind-friendly color
-        st.plotly_chart(fig, use_container_width=True)
+        # Display the data in a table
+        st.write("Brand and Transmission Types:")
+        st.dataframe(brand_transmission_df)
     
     elif selected_analysis == "Average Mileage per Fuel Type":
         avg_mileage = car_details.groupby('Fuel_Type')['Mileage_km'].mean()
@@ -83,9 +74,23 @@ if page == "Data Analysis":
             y=avg_mileage.values, 
             labels={'x': 'Fuel Type', 'y': 'Average Mileage (km)'},
             title="Average Mileage per Fuel Type",
-            text=avg_mileage.values
+            text=avg_mileage.values.round(2),
+            color=avg_mileage.index,  # Use color for better distinction
+            color_discrete_sequence=plotly.colors.qualitative.Plotly  # Colorblind-friendly palette
         )
-        fig.update_traces(marker_color='#1f77b4')  # Use a colorblind-friendly color
+        st.plotly_chart(fig, use_container_width=True)
+    
+    elif selected_analysis == "Count of Cars by Fuel Type":
+        fuel_counts = merged_df["Fuel_Type"].value_counts()
+        
+        # Create an interactive pie chart with Plotly
+        fig = px.pie(
+            fuel_counts, 
+            values=fuel_counts.values, 
+            names=fuel_counts.index, 
+            title="Count of Cars by Fuel Type",
+            color_discrete_sequence=plotly.colors.qualitative.Plotly  # Colorblind-friendly palette
+        )
         st.plotly_chart(fig, use_container_width=True)
     
     elif selected_analysis == "Car Brands with the Best Mileage-to-Price Ratio":
@@ -99,9 +104,10 @@ if page == "Data Analysis":
             y=brand_mileage_price_ratio.values, 
             labels={'x': 'Brand', 'y': 'Mileage per Unit Price'},
             title="Car Brands with the Best Mileage-to-Price Ratio",
-            text=brand_mileage_price_ratio.values.round(2)
+            text=brand_mileage_price_ratio.values.round(2),
+            color=brand_mileage_price_ratio.index,  # Use color for better distinction
+            color_discrete_sequence=plotly.colors.qualitative.Plotly  # Colorblind-friendly palette
         )
-        fig.update_traces(marker_color='#1f77b4')  # Use a colorblind-friendly color
         st.plotly_chart(fig, use_container_width=True)
         
         # Display the list of ratios
@@ -119,9 +125,9 @@ if page == "Data Analysis":
             y=age_price.values, 
             labels={'x': 'Car Age (Years)', 'y': 'Average Price (USD)'},
             title="Price Trends Over Years",
-            markers=True
+            markers=True,
+            color_discrete_sequence=plotly.colors.qualitative.Plotly  # Colorblind-friendly palette
         )
-        fig.update_traces(line_color='green')  # Use a colorblind-friendly color
         st.plotly_chart(fig, use_container_width=True)
     
     elif selected_analysis == "EV Distribution by Location":
@@ -133,7 +139,8 @@ if page == "Data Analysis":
             ev_by_location, 
             values=ev_by_location.values, 
             names=ev_by_location.index, 
-            title="EV Distribution by Location"
+            title="EV Distribution by Location",
+            color_discrete_sequence=plotly.colors.qualitative.Plotly  # Colorblind-friendly palette
         )
         st.plotly_chart(fig, use_container_width=True)
     
@@ -148,7 +155,8 @@ if page == "Data Analysis":
             color="Transmission", 
             labels={'x': 'Location', 'y': 'Number of Cars'},
             title="Transmission Types in Each Location",
-            barmode='group'
+            barmode='group',
+            color_discrete_sequence=plotly.colors.qualitative.Plotly  # Colorblind-friendly palette
         )
         st.plotly_chart(fig, use_container_width=True)
     
@@ -163,9 +171,10 @@ if page == "Data Analysis":
             y=ev_by_year.values, 
             labels={'x': 'Year', 'y': 'Number of EVs'},
             title="EV Listings by Year",
-            text=ev_by_year.values
+            text=ev_by_year.values,
+            color=ev_by_year.index,  # Use color for better distinction
+            color_discrete_sequence=plotly.colors.qualitative.Plotly  # Colorblind-friendly palette
         )
-        fig.update_traces(marker_color='#1f77b4')  # Use a colorblind-friendly color
         st.plotly_chart(fig, use_container_width=True)
 
 # Car Recommendation AI Page
