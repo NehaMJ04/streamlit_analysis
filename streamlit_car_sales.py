@@ -40,13 +40,15 @@ if page == "Data Analysis":
     if selected_analysis == "Most Common Car Brands":
         top_brands = car_details['Brand'].value_counts().head(5)
         
-        # Create a bar chart with y-axis limits
-        plt.figure(figsize=(10, 5))
+        # Create a bar chart
+        plt.figure(figsize=(8, 5))  # Default figure size
         sns.barplot(x=top_brands.index, y=top_brands.values, palette="colorblind")
-        plt.title("Most Common Car Brands")
-        plt.xlabel("Brand")
-        plt.ylabel("Number of Cars")
+        plt.title("Most Common Car Brands", fontsize=14)
+        plt.xlabel("Brand", fontsize=12)
+        plt.ylabel("Number of Cars", fontsize=12)
+        plt.xticks(rotation=45)  # Rotate x-axis labels
         plt.ylim(0, top_brands.max() + 100)  # Set y-axis limits
+        plt.tight_layout()  # Adjust layout to prevent overlap
         st.pyplot(plt.gcf())
     
     elif selected_analysis == "Brand and Models":
@@ -65,13 +67,15 @@ if page == "Data Analysis":
     elif selected_analysis == "Average Mileage per Fuel Type":
         avg_mileage = car_details.groupby('Fuel_Type')['Mileage_km'].mean()
         
-        # Create a bar chart with y-axis limits
-        plt.figure(figsize=(10, 5))
+        # Create a bar chart
+        plt.figure(figsize=(8, 5))  # Default figure size
         sns.barplot(x=avg_mileage.index, y=avg_mileage.values, palette="colorblind")
-        plt.title("Average Mileage per Fuel Type")
-        plt.xlabel("Fuel Type")
-        plt.ylabel("Average Mileage (km)")
+        plt.title("Average Mileage per Fuel Type", fontsize=14)
+        plt.xlabel("Fuel Type", fontsize=12)
+        plt.ylabel("Average Mileage (km)", fontsize=12)
+        plt.xticks(rotation=45)  # Rotate x-axis labels
         plt.ylim(0, avg_mileage.max() + 1000)  # Set y-axis limits
+        plt.tight_layout()  # Adjust layout to prevent overlap
         st.pyplot(plt.gcf())
     
     elif selected_analysis == "Basic Statistical Summary":
@@ -83,43 +87,50 @@ if page == "Data Analysis":
     elif selected_analysis == "Most Common Transmission Type in Recent Years":
         recent_transmission = car_details[car_details['Year'] >= 2020]['Transmission'].value_counts()
         
-        # Create a bar chart with y-axis limits
-        plt.figure(figsize=(10, 5))
+        # Create a bar chart
+        plt.figure(figsize=(8, 5))  # Default figure size
         sns.barplot(x=recent_transmission.index, y=recent_transmission.values, palette="colorblind")
-        plt.title("Most Common Transmission Type in Recent Years")
-        plt.xlabel("Transmission Type")
-        plt.ylabel("Number of Cars")
+        plt.title("Most Common Transmission Type in Recent Years", fontsize=14)
+        plt.xlabel("Transmission Type", fontsize=12)
+        plt.ylabel("Number of Cars", fontsize=12)
+        plt.xticks(rotation=45)  # Rotate x-axis labels
         plt.ylim(0, recent_transmission.max() + 100)  # Set y-axis limits
+        plt.tight_layout()  # Adjust layout to prevent overlap
         st.pyplot(plt.gcf())
     
     elif selected_analysis == "Top 10 Locations with Most Cars Listed":
         top_locations = car_details['Location'].value_counts().head(10)
         
-        # Create a bar chart with y-axis limits
-        plt.figure(figsize=(10, 5))
+        # Create a bar chart
+        plt.figure(figsize=(8, 5))  # Default figure size
         sns.barplot(x=top_locations.index, y=top_locations.values, palette="colorblind")
-        plt.title("Top 10 Locations with Most Cars Listed")
-        plt.xlabel("Location")
-        plt.ylabel("Number of Cars")
+        plt.title("Top 10 Locations with Most Cars Listed", fontsize=14)
+        plt.xlabel("Location", fontsize=12)
+        plt.ylabel("Number of Cars", fontsize=12)
+        plt.xticks(rotation=45)  # Rotate x-axis labels
         plt.ylim(0, top_locations.max() + 100)  # Set y-axis limits
+        plt.tight_layout()  # Adjust layout to prevent overlap
         st.pyplot(plt.gcf())
     
     elif selected_analysis == "Count of Cars by Fuel Type":
         fuel_counts = merged_df["Fuel_Type"].value_counts()
         
         # Create a pie chart
-        plt.figure(figsize=(8, 8))
+        plt.figure(figsize=(6, 6))  # Default figure size
         plt.pie(fuel_counts, labels=fuel_counts.index, autopct='%1.1f%%', startangle=140, colors=sns.color_palette("colorblind"))
-        plt.title("Count of Cars by Fuel Type (Pie Chart)")
+        plt.title("Count of Cars by Fuel Type", fontsize=14)
+        plt.tight_layout()  # Adjust layout to prevent overlap
         st.pyplot(plt.gcf())
         
-        # Create a bar chart with y-axis limits
-        plt.figure(figsize=(10, 5))
+        # Create a bar chart
+        plt.figure(figsize=(8, 5))  # Default figure size
         sns.barplot(x=fuel_counts.index, y=fuel_counts.values, palette="colorblind")
-        plt.title("Count of Cars by Fuel Type (Bar Chart)")
-        plt.xlabel("Fuel Type")
-        plt.ylabel("Number of Cars")
+        plt.title("Count of Cars by Fuel Type", fontsize=14)
+        plt.xlabel("Fuel Type", fontsize=12)
+        plt.ylabel("Number of Cars", fontsize=12)
+        plt.xticks(rotation=45)  # Rotate x-axis labels
         plt.ylim(0, fuel_counts.max() + 100)  # Set y-axis limits
+        plt.tight_layout()  # Adjust layout to prevent overlap
         st.pyplot(plt.gcf())
     
     elif selected_analysis == "Common Price Range for Each Car Model":
@@ -136,111 +147,128 @@ if page == "Data Analysis":
     elif selected_analysis == "Average Price of Automatic vs Manual Cars":
         avg_price_transmission = merged_df.groupby("Transmission")["Price_USD"].mean()
         
-        # Create a bar chart with y-axis limits
-        plt.figure(figsize=(10, 5))
+        # Create a bar chart
+        plt.figure(figsize=(8, 5))  # Default figure size
         sns.barplot(x=avg_price_transmission.index, y=avg_price_transmission.values, palette="colorblind")
-        plt.title("Average Price of Automatic vs Manual Cars")
-        plt.xlabel("Transmission Type")
-        plt.ylabel("Average Price (USD)")
+        plt.title("Average Price of Automatic vs Manual Cars", fontsize=14)
+        plt.xlabel("Transmission Type", fontsize=12)
+        plt.ylabel("Average Price (USD)", fontsize=12)
+        plt.xticks(rotation=45)  # Rotate x-axis labels
         plt.ylim(0, avg_price_transmission.max() + 1000)  # Set y-axis limits
+        plt.tight_layout()  # Adjust layout to prevent overlap
         st.pyplot(plt.gcf())
     
     elif selected_analysis == "Top 5 Brands with Highest Resale Values":
         resale_values = merged_df.groupby("Brand")["Price_USD"].median().sort_values(ascending=False).head(5)
         
-        # Create a bar chart with y-axis limits
-        plt.figure(figsize=(10, 5))
+        # Create a bar chart
+        plt.figure(figsize=(8, 5))  # Default figure size
         sns.barplot(x=resale_values.index, y=resale_values.values, palette="colorblind")
-        plt.title("Top 5 Brands with Highest Resale Values")
-        plt.xlabel("Brand")
-        plt.ylabel("Median Resale Price (USD)")
+        plt.title("Top 5 Brands with Highest Resale Values", fontsize=14)
+        plt.xlabel("Brand", fontsize=12)
+        plt.ylabel("Median Resale Price (USD)", fontsize=12)
+        plt.xticks(rotation=45)  # Rotate x-axis labels
         plt.ylim(0, resale_values.max() + 1000)  # Set y-axis limits
+        plt.tight_layout()  # Adjust layout to prevent overlap
         st.pyplot(plt.gcf())
     
     elif selected_analysis == "Engine Size vs Average Price":
         eng = merged_df.groupby("Engine_cc")["Price_USD"].mean()
         
-        # Create a bar chart with y-axis limits
-        plt.figure(figsize=(10, 5))
+        # Create a bar chart
+        plt.figure(figsize=(8, 5))  # Default figure size
         sns.barplot(x=eng.index, y=eng.values, palette="colorblind")
-        plt.title("Engine Size vs Average Price")
-        plt.xlabel("Engine Size (cc)")
-        plt.ylabel("Average Price (USD)")
+        plt.title("Engine Size vs Average Price", fontsize=14)
+        plt.xlabel("Engine Size (cc)", fontsize=12)
+        plt.ylabel("Average Price (USD)", fontsize=12)
+        plt.xticks(rotation=45)  # Rotate x-axis labels
         plt.ylim(0, eng.max() + 1000)  # Set y-axis limits
+        plt.tight_layout()  # Adjust layout to prevent overlap
         st.pyplot(plt.gcf())
     
     elif selected_analysis == "Average Resale Value by Fuel Type":
         resale_values = merged_df.groupby("Fuel_Type")["Price_USD"].median()
         
         # Create a pie chart
-        plt.figure(figsize=(8, 8))
+        plt.figure(figsize=(6, 6))  # Default figure size
         plt.pie(resale_values, labels=resale_values.index, autopct='%1.1f%%', startangle=140, colors=sns.color_palette("colorblind"))
-        plt.title("Average Resale Value by Fuel Type (Pie Chart)")
+        plt.title("Average Resale Value by Fuel Type", fontsize=14)
+        plt.tight_layout()  # Adjust layout to prevent overlap
         st.pyplot(plt.gcf())
         
-        # Create a bar chart with y-axis limits
-        plt.figure(figsize=(10, 5))
+        # Create a bar chart
+        plt.figure(figsize=(8, 5))  # Default figure size
         sns.barplot(x=resale_values.index, y=resale_values.values, palette="colorblind")
-        plt.title("Average Resale Value by Fuel Type (Bar Chart)")
-        plt.xlabel("Fuel Type")
-        plt.ylabel("Median Resale Price (USD)")
+        plt.title("Average Resale Value by Fuel Type", fontsize=14)
+        plt.xlabel("Fuel Type", fontsize=12)
+        plt.ylabel("Median Resale Price (USD)", fontsize=12)
+        plt.xticks(rotation=45)  # Rotate x-axis labels
         plt.ylim(0, resale_values.max() + 1000)  # Set y-axis limits
+        plt.tight_layout()  # Adjust layout to prevent overlap
         st.pyplot(plt.gcf())
     
     elif selected_analysis == "Average Price by Car Brand":
         price_by_brand = merged_df.groupby("Brand")["Price_USD"].mean()
         
-        # Create a bar chart with y-axis limits
-        plt.figure(figsize=(10, 5))
+        # Create a bar chart
+        plt.figure(figsize=(8, 5))  # Default figure size
         sns.barplot(x=price_by_brand.index, y=price_by_brand.values, palette="colorblind")
-        plt.title("Average Price by Car Brand")
-        plt.xlabel("Brand")
-        plt.ylabel("Average Price (USD)")
+        plt.title("Average Price by Car Brand", fontsize=14)
+        plt.xlabel("Brand", fontsize=12)
+        plt.ylabel("Average Price (USD)", fontsize=12)
+        plt.xticks(rotation=45)  # Rotate x-axis labels
         plt.ylim(0, price_by_brand.max() + 1000)  # Set y-axis limits
+        plt.tight_layout()  # Adjust layout to prevent overlap
         st.pyplot(plt.gcf())
     
     elif selected_analysis == "Transmission Type vs Number of Cars":
         transmission_counts = merged_df["Transmission"].value_counts()
         
         # Create a pie chart
-        plt.figure(figsize=(8, 8))
+        plt.figure(figsize=(6, 6))  # Default figure size
         plt.pie(transmission_counts, labels=transmission_counts.index, autopct='%1.1f%%', startangle=140, colors=sns.color_palette("colorblind"))
-        plt.title("Transmission Type vs Number of Cars (Pie Chart)")
+        plt.title("Transmission Type vs Number of Cars", fontsize=14)
+        plt.tight_layout()  # Adjust layout to prevent overlap
         st.pyplot(plt.gcf())
         
-        # Create a bar chart with y-axis limits
-        plt.figure(figsize=(10, 5))
+        # Create a bar chart
+        plt.figure(figsize=(8, 5))  # Default figure size
         sns.barplot(x=transmission_counts.index, y=transmission_counts.values, palette="colorblind")
-        plt.title("Transmission Type vs Number of Cars (Bar Chart)")
-        plt.xlabel("Transmission Type")
-        plt.ylabel("Number of Cars")
+        plt.title("Transmission Type vs Number of Cars", fontsize=14)
+        plt.xlabel("Transmission Type", fontsize=12)
+        plt.ylabel("Number of Cars", fontsize=12)
+        plt.xticks(rotation=45)  # Rotate x-axis labels
         plt.ylim(0, transmission_counts.max() + 100)  # Set y-axis limits
+        plt.tight_layout()  # Adjust layout to prevent overlap
         st.pyplot(plt.gcf())
     
     elif selected_analysis == "Depreciation: Average Price of Cars by Age":
         merged_df["Car_Age"] = 2024 - merged_df["Year"]
         age_price = merged_df.groupby("Car_Age")["Price_USD"].mean()
         
-        # Create a line chart with y-axis limits
-        plt.figure(figsize=(10, 5))
+        # Create a line chart
+        plt.figure(figsize=(8, 5))  # Default figure size
         sns.lineplot(x=age_price.index, y=age_price.values, marker="o", color="green")
-        plt.title("Depreciation: Average Price of Cars by Age")
-        plt.xlabel("Car Age (Years)")
-        plt.ylabel("Average Price (USD)")
+        plt.title("Depreciation: Average Price of Cars by Age", fontsize=14)
+        plt.xlabel("Car Age (Years)", fontsize=12)
+        plt.ylabel("Average Price (USD)", fontsize=12)
         plt.ylim(0, age_price.max() + 1000)  # Set y-axis limits
+        plt.tight_layout()  # Adjust layout to prevent overlap
         st.pyplot(plt.gcf())
     
     elif selected_analysis == "Car Brands with the Best Mileage-to-Price Ratio":
         merged_df["Mileage_to_Price"] = merged_df["Mileage_km"] / merged_df["Price_USD"].replace(0, 1)
         brand_mileage_price_ratio = merged_df.groupby("Brand")["Mileage_to_Price"].mean().sort_values(ascending=False).head(10)
         
-        # Create a bar chart with y-axis limits
-        plt.figure(figsize=(12, 6))
+        # Create a bar chart
+        plt.figure(figsize=(8, 5))  # Default figure size
         sns.barplot(x=brand_mileage_price_ratio.index, y=brand_mileage_price_ratio.values, palette="colorblind")
-        plt.title("Car Brands with the Best Mileage-to-Price Ratio")
-        plt.xlabel("Car Brand")
-        plt.ylabel("Mileage per Unit Price")
+        plt.title("Car Brands with the Best Mileage-to-Price Ratio", fontsize=14)
+        plt.xlabel("Car Brand", fontsize=12)
+        plt.ylabel("Mileage per Unit Price", fontsize=12)
+        plt.xticks(rotation=45)  # Rotate x-axis labels
         plt.ylim(0, brand_mileage_price_ratio.max() + 0.1)  # Set y-axis limits
+        plt.tight_layout()  # Adjust layout to prevent overlap
         st.pyplot(plt.gcf())
         
         # Display the list of ratios
@@ -250,26 +278,29 @@ if page == "Data Analysis":
     elif selected_analysis == "Number of Cars Sold Each Year":
         yearly_sales = car_details["Year"].value_counts().sort_index()
         
-        # Create a bar chart with y-axis limits
-        plt.figure(figsize=(10, 5))
+        # Create a bar chart
+        plt.figure(figsize=(8, 5))  # Default figure size
         sns.barplot(x=yearly_sales.index, y=yearly_sales.values, palette="colorblind")
-        plt.title("Number of Cars Sold Each Year")
-        plt.xlabel("Year")
-        plt.ylabel("Number of Cars")
+        plt.title("Number of Cars Sold Each Year", fontsize=14)
+        plt.xlabel("Year", fontsize=12)
+        plt.ylabel("Number of Cars", fontsize=12)
+        plt.xticks(rotation=45)  # Rotate x-axis labels
         plt.ylim(0, yearly_sales.max() + 100)  # Set y-axis limits
+        plt.tight_layout()  # Adjust layout to prevent overlap
         st.pyplot(plt.gcf())
     
     elif selected_analysis == "Price Trends Over Years":
         merged_df["Car_Age"] = 2024 - merged_df["Year"]
         age_price = merged_df.groupby("Car_Age")["Price_USD"].mean()
         
-        # Create a line chart with y-axis limits
-        plt.figure(figsize=(10, 5))
+        # Create a line chart
+        plt.figure(figsize=(8, 5))  # Default figure size
         sns.lineplot(x=age_price.index, y=age_price.values, marker="o", color="green")
-        plt.title("Price Trends Over Years")
-        plt.xlabel("Car Age (Years)")
-        plt.ylabel("Average Price (USD)")
+        plt.title("Price Trends Over Years", fontsize=14)
+        plt.xlabel("Car Age (Years)", fontsize=12)
+        plt.ylabel("Average Price (USD)", fontsize=12)
         plt.ylim(0, age_price.max() + 1000)  # Set y-axis limits
+        plt.tight_layout()  # Adjust layout to prevent overlap
         st.pyplot(plt.gcf())
     
     elif selected_analysis == "EV Distribution by Location":
@@ -277,22 +308,24 @@ if page == "Data Analysis":
         ev_by_location = ev_cars["Location"].value_counts()
         
         # Create a pie chart
-        plt.figure(figsize=(8, 8))
+        plt.figure(figsize=(6, 6))  # Default figure size
         plt.pie(ev_by_location, labels=ev_by_location.index, autopct='%1.1f%%', startangle=140, colors=sns.color_palette("colorblind"))
-        plt.title("EV Distribution by Location")
+        plt.title("EV Distribution by Location", fontsize=14)
+        plt.tight_layout()  # Adjust layout to prevent overlap
         st.pyplot(plt.gcf())
     
     elif selected_analysis == "Transmission Type in Each Location":
         transmission_by_location = car_details.groupby(["Location", "Transmission"]).size().reset_index(name="Count")
         
         # Create a Seaborn bar plot
-        plt.figure(figsize=(12, 6))
+        plt.figure(figsize=(8, 5))  # Default figure size
         sns.barplot(x="Location", y="Count", hue="Transmission", data=transmission_by_location, palette="colorblind")
-        plt.title("Transmission Types in Each Location")
-        plt.xlabel("Location")
-        plt.ylabel("Number of Cars")
-        plt.xticks(rotation=45)
-        plt.legend(title="Transmission Type")
+        plt.title("Transmission Types in Each Location", fontsize=14)
+        plt.xlabel("Location", fontsize=12)
+        plt.ylabel("Number of Cars", fontsize=12)
+        plt.xticks(rotation=45)  # Rotate x-axis labels
+        plt.ylim(0, transmission_by_location["Count"].max() + 100)  # Set y-axis limits
+        plt.tight_layout()  # Adjust layout to prevent overlap
         st.pyplot(plt.gcf())
     
     elif selected_analysis == "EV Listings by Year":
@@ -300,12 +333,14 @@ if page == "Data Analysis":
         ev_by_year = ev_cars["Year"].value_counts().sort_index()
         
         # Create a bar chart
-        plt.figure(figsize=(10, 5))
+        plt.figure(figsize=(8, 5))  # Default figure size
         sns.barplot(x=ev_by_year.index, y=ev_by_year.values, palette="colorblind")
-        plt.title("EV Listings by Year")
-        plt.xlabel("Year")
-        plt.ylabel("Number of EVs")
+        plt.title("EV Listings by Year", fontsize=14)
+        plt.xlabel("Year", fontsize=12)
+        plt.ylabel("Number of EVs", fontsize=12)
+        plt.xticks(rotation=45)  # Rotate x-axis labels
         plt.ylim(0, ev_by_year.max() + 100)  # Set y-axis limits
+        plt.tight_layout()  # Adjust layout to prevent overlap
         st.pyplot(plt.gcf())
 
 # Car Recommendation AI Page
