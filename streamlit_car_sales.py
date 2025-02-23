@@ -121,12 +121,15 @@ if page == "Data Analysis":
     elif selected_analysis == "Average Resale Value by Fuel Type":
         resale_values = merged_df.groupby("Fuel_Type")["Price_USD"].median()
         
-        # Create a pie chart with Seaborn's colorblind palette
-        plt.figure(figsize=(4, 8))
+        # Create a pie chart
+        plt.figure(figsize=(8, 8))
         plt.pie(resale_values, labels=resale_values.index, autopct='%1.1f%%', startangle=140, colors=sns.color_palette("colorblind"))
-        plt.title("Average Resale Value by Fuel Type")
+        plt.title("Average Resale Value by Fuel Type (Pie Chart)")
         st.pyplot(plt.gcf())
-    
+        
+        # Create a bar chart
+        st.bar_chart(resale_values, color="#1f77b4")
+        st.write("Average Resale Value by Fuel Type (Bar Chart)")
     elif selected_analysis == "Average Price by Car Brand":
         price_by_brand = merged_df.groupby("Brand")["Price_USD"].mean()
         
