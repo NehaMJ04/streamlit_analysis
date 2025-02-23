@@ -116,10 +116,16 @@ elif page == "Car Recommendation AI":
     brand = st.sidebar.selectbox("Preferred Brand", merged_df['Brand'].unique())
     transmission = st.sidebar.selectbox("Preferred Transmission", merged_df['Transmission'].unique())
     
+    # Price range filter
+    min_price = st.sidebar.slider("Minimum Price (USD)", int(merged_df['Price_USD'].min()), int(merged_df['Price_USD'].max()))
+    max_price = st.sidebar.slider("Maximum Price (USD)", int(merged_df['Price_USD'].min()), int(merged_df['Price_USD'].max()))
+    
     # Filter data based on user inputs
     filtered_df = merged_df[(merged_df['Location'] == location) & 
                             (merged_df['Brand'] == brand) & 
-                            (merged_df['Transmission'] == transmission)]
+                            (merged_df['Transmission'] == transmission) & 
+                            (merged_df['Price_USD'] >= min_price) & 
+                            (merged_df['Price_USD'] <= max_price)]
     
     if not filtered_df.empty:
         st.write(f"Recommended Cars in {location} for {brand} with {transmission} transmission:")
