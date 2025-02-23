@@ -40,8 +40,14 @@ if page == "Data Analysis":
     if selected_analysis == "Most Common Car Brands":
         top_brands = car_details['Brand'].value_counts().head(5)
         
-        # Use Seaborn's colorblind palette for Streamlit's native bar chart
-        st.bar_chart(top_brands, color="#1f77b4")  # Use a colorblind-friendly color
+        # Create a bar chart with y-axis limits
+        plt.figure(figsize=(10, 5))
+        sns.barplot(x=top_brands.index, y=top_brands.values, palette="colorblind")
+        plt.title("Most Common Car Brands")
+        plt.xlabel("Brand")
+        plt.ylabel("Number of Cars")
+        plt.ylim(0, top_brands.max() + 100)  # Set y-axis limits
+        st.pyplot(plt.gcf())
     
     elif selected_analysis == "Brand and Models":
         brand_model_df = car_details.groupby("Brand")["Model"].unique().reset_index()
@@ -59,8 +65,14 @@ if page == "Data Analysis":
     elif selected_analysis == "Average Mileage per Fuel Type":
         avg_mileage = car_details.groupby('Fuel_Type')['Mileage_km'].mean()
         
-        # Use Seaborn's colorblind palette for Streamlit's native bar chart
-        st.bar_chart(avg_mileage, color="#1f77b4")  # Use a colorblind-friendly color
+        # Create a bar chart with y-axis limits
+        plt.figure(figsize=(10, 5))
+        sns.barplot(x=avg_mileage.index, y=avg_mileage.values, palette="colorblind")
+        plt.title("Average Mileage per Fuel Type")
+        plt.xlabel("Fuel Type")
+        plt.ylabel("Average Mileage (km)")
+        plt.ylim(0, avg_mileage.max() + 1000)  # Set y-axis limits
+        st.pyplot(plt.gcf())
     
     elif selected_analysis == "Basic Statistical Summary":
         st.write("Price Dataset Description:")
@@ -71,22 +83,43 @@ if page == "Data Analysis":
     elif selected_analysis == "Most Common Transmission Type in Recent Years":
         recent_transmission = car_details[car_details['Year'] >= 2020]['Transmission'].value_counts()
         
-        # Use Seaborn's colorblind palette for Streamlit's native bar chart
-        st.bar_chart(recent_transmission, color="#1f77b4")  # Use a colorblind-friendly color
+        # Create a bar chart with y-axis limits
+        plt.figure(figsize=(10, 5))
+        sns.barplot(x=recent_transmission.index, y=recent_transmission.values, palette="colorblind")
+        plt.title("Most Common Transmission Type in Recent Years")
+        plt.xlabel("Transmission Type")
+        plt.ylabel("Number of Cars")
+        plt.ylim(0, recent_transmission.max() + 100)  # Set y-axis limits
+        st.pyplot(plt.gcf())
     
     elif selected_analysis == "Top 10 Locations with Most Cars Listed":
         top_locations = car_details['Location'].value_counts().head(10)
         
-        # Use Seaborn's colorblind palette for Streamlit's native bar chart
-        st.bar_chart(top_locations, color="#1f77b4")  # Use a colorblind-friendly color
+        # Create a bar chart with y-axis limits
+        plt.figure(figsize=(10, 5))
+        sns.barplot(x=top_locations.index, y=top_locations.values, palette="colorblind")
+        plt.title("Top 10 Locations with Most Cars Listed")
+        plt.xlabel("Location")
+        plt.ylabel("Number of Cars")
+        plt.ylim(0, top_locations.max() + 100)  # Set y-axis limits
+        st.pyplot(plt.gcf())
     
     elif selected_analysis == "Count of Cars by Fuel Type":
         fuel_counts = merged_df["Fuel_Type"].value_counts()
         
-        # Create a pie chart with Seaborn's colorblind palette
+        # Create a pie chart
         plt.figure(figsize=(8, 8))
         plt.pie(fuel_counts, labels=fuel_counts.index, autopct='%1.1f%%', startangle=140, colors=sns.color_palette("colorblind"))
-        plt.title("Count of Cars by Fuel Type")
+        plt.title("Count of Cars by Fuel Type (Pie Chart)")
+        st.pyplot(plt.gcf())
+        
+        # Create a bar chart with y-axis limits
+        plt.figure(figsize=(10, 5))
+        sns.barplot(x=fuel_counts.index, y=fuel_counts.values, palette="colorblind")
+        plt.title("Count of Cars by Fuel Type (Bar Chart)")
+        plt.xlabel("Fuel Type")
+        plt.ylabel("Number of Cars")
+        plt.ylim(0, fuel_counts.max() + 100)  # Set y-axis limits
         st.pyplot(plt.gcf())
     
     elif selected_analysis == "Common Price Range for Each Car Model":
@@ -103,80 +136,147 @@ if page == "Data Analysis":
     elif selected_analysis == "Average Price of Automatic vs Manual Cars":
         avg_price_transmission = merged_df.groupby("Transmission")["Price_USD"].mean()
         
-        # Use Seaborn's colorblind palette for Streamlit's native bar chart
-        st.bar_chart(avg_price_transmission, color="#1f77b4")  # Use a colorblind-friendly color
+        # Create a bar chart with y-axis limits
+        plt.figure(figsize=(10, 5))
+        sns.barplot(x=avg_price_transmission.index, y=avg_price_transmission.values, palette="colorblind")
+        plt.title("Average Price of Automatic vs Manual Cars")
+        plt.xlabel("Transmission Type")
+        plt.ylabel("Average Price (USD)")
+        plt.ylim(0, avg_price_transmission.max() + 1000)  # Set y-axis limits
+        st.pyplot(plt.gcf())
     
     elif selected_analysis == "Top 5 Brands with Highest Resale Values":
         resale_values = merged_df.groupby("Brand")["Price_USD"].median().sort_values(ascending=False).head(5)
         
-        # Use Seaborn's colorblind palette for Streamlit's native bar chart
-        st.bar_chart(resale_values, color="#1f77b4")  # Use a colorblind-friendly color
+        # Create a bar chart with y-axis limits
+        plt.figure(figsize=(10, 5))
+        sns.barplot(x=resale_values.index, y=resale_values.values, palette="colorblind")
+        plt.title("Top 5 Brands with Highest Resale Values")
+        plt.xlabel("Brand")
+        plt.ylabel("Median Resale Price (USD)")
+        plt.ylim(0, resale_values.max() + 1000)  # Set y-axis limits
+        st.pyplot(plt.gcf())
     
     elif selected_analysis == "Engine Size vs Average Price":
         eng = merged_df.groupby("Engine_cc")["Price_USD"].mean()
         
-        # Use Seaborn's colorblind palette for Streamlit's native bar chart
-        st.bar_chart(eng, color="#1f77b4")  # Use a colorblind-friendly color
+        # Create a bar chart with y-axis limits
+        plt.figure(figsize=(10, 5))
+        sns.barplot(x=eng.index, y=eng.values, palette="colorblind")
+        plt.title("Engine Size vs Average Price")
+        plt.xlabel("Engine Size (cc)")
+        plt.ylabel("Average Price (USD)")
+        plt.ylim(0, eng.max() + 1000)  # Set y-axis limits
+        st.pyplot(plt.gcf())
     
     elif selected_analysis == "Average Resale Value by Fuel Type":
         resale_values = merged_df.groupby("Fuel_Type")["Price_USD"].median()
         
         # Create a pie chart
-        plt.figure(figsize=(4, 4))
+        plt.figure(figsize=(8, 8))
         plt.pie(resale_values, labels=resale_values.index, autopct='%1.1f%%', startangle=140, colors=sns.color_palette("colorblind"))
         plt.title("Average Resale Value by Fuel Type (Pie Chart)")
         st.pyplot(plt.gcf())
         
-        # Create a bar chart
-        st.bar_chart(resale_values, color="#1f77b4")
-        st.write("Average Resale Value by Fuel Type (Bar Chart)")
+        # Create a bar chart with y-axis limits
+        plt.figure(figsize=(10, 5))
+        sns.barplot(x=resale_values.index, y=resale_values.values, palette="colorblind")
+        plt.title("Average Resale Value by Fuel Type (Bar Chart)")
+        plt.xlabel("Fuel Type")
+        plt.ylabel("Median Resale Price (USD)")
+        plt.ylim(0, resale_values.max() + 1000)  # Set y-axis limits
+        st.pyplot(plt.gcf())
+    
     elif selected_analysis == "Average Price by Car Brand":
         price_by_brand = merged_df.groupby("Brand")["Price_USD"].mean()
         
-        # Use Seaborn's colorblind palette for Streamlit's native bar chart
-        st.bar_chart(price_by_brand, color="#1f77b4")  # Use a colorblind-friendly color
+        # Create a bar chart with y-axis limits
+        plt.figure(figsize=(10, 5))
+        sns.barplot(x=price_by_brand.index, y=price_by_brand.values, palette="colorblind")
+        plt.title("Average Price by Car Brand")
+        plt.xlabel("Brand")
+        plt.ylabel("Average Price (USD)")
+        plt.ylim(0, price_by_brand.max() + 1000)  # Set y-axis limits
+        st.pyplot(plt.gcf())
     
     elif selected_analysis == "Transmission Type vs Number of Cars":
         transmission_counts = merged_df["Transmission"].value_counts()
         
-        # Create a pie chart with Seaborn's colorblind palette
+        # Create a pie chart
         plt.figure(figsize=(8, 8))
         plt.pie(transmission_counts, labels=transmission_counts.index, autopct='%1.1f%%', startangle=140, colors=sns.color_palette("colorblind"))
-        plt.title("Transmission Type vs Number of Cars")
+        plt.title("Transmission Type vs Number of Cars (Pie Chart)")
+        st.pyplot(plt.gcf())
+        
+        # Create a bar chart with y-axis limits
+        plt.figure(figsize=(10, 5))
+        sns.barplot(x=transmission_counts.index, y=transmission_counts.values, palette="colorblind")
+        plt.title("Transmission Type vs Number of Cars (Bar Chart)")
+        plt.xlabel("Transmission Type")
+        plt.ylabel("Number of Cars")
+        plt.ylim(0, transmission_counts.max() + 100)  # Set y-axis limits
         st.pyplot(plt.gcf())
     
     elif selected_analysis == "Depreciation: Average Price of Cars by Age":
         merged_df["Car_Age"] = 2024 - merged_df["Year"]
         age_price = merged_df.groupby("Car_Age")["Price_USD"].mean()
         
-        # Use Seaborn's colorblind palette for Streamlit's native line chart
-        st.line_chart(age_price, color="#1f77b4")  # Use a colorblind-friendly color
+        # Create a line chart with y-axis limits
+        plt.figure(figsize=(10, 5))
+        sns.lineplot(x=age_price.index, y=age_price.values, marker="o", color="green")
+        plt.title("Depreciation: Average Price of Cars by Age")
+        plt.xlabel("Car Age (Years)")
+        plt.ylabel("Average Price (USD)")
+        plt.ylim(0, age_price.max() + 1000)  # Set y-axis limits
+        st.pyplot(plt.gcf())
     
     elif selected_analysis == "Car Brands with the Best Mileage-to-Price Ratio":
         merged_df["Mileage_to_Price"] = merged_df["Mileage_km"] / merged_df["Price_USD"].replace(0, 1)
         brand_mileage_price_ratio = merged_df.groupby("Brand")["Mileage_to_Price"].mean().sort_values(ascending=False).head(10)
         
-        # Use Seaborn's colorblind palette for Streamlit's native bar chart
-        st.bar_chart(brand_mileage_price_ratio, color="#1f77b4")  # Use a colorblind-friendly color
+        # Create a bar chart with y-axis limits
+        plt.figure(figsize=(12, 6))
+        sns.barplot(x=brand_mileage_price_ratio.index, y=brand_mileage_price_ratio.values, palette="colorblind")
+        plt.title("Car Brands with the Best Mileage-to-Price Ratio")
+        plt.xlabel("Car Brand")
+        plt.ylabel("Mileage per Unit Price")
+        plt.ylim(0, brand_mileage_price_ratio.max() + 0.1)  # Set y-axis limits
+        st.pyplot(plt.gcf())
+        
+        # Display the list of ratios
+        st.write("Mileage-to-Price Ratios by Brand:")
+        st.write(brand_mileage_price_ratio)
     
     elif selected_analysis == "Number of Cars Sold Each Year":
         yearly_sales = car_details["Year"].value_counts().sort_index()
         
-        # Use Seaborn's colorblind palette for Streamlit's native bar chart
-        st.bar_chart(yearly_sales, color="#1f77b4")  # Use a colorblind-friendly color
+        # Create a bar chart with y-axis limits
+        plt.figure(figsize=(10, 5))
+        sns.barplot(x=yearly_sales.index, y=yearly_sales.values, palette="colorblind")
+        plt.title("Number of Cars Sold Each Year")
+        plt.xlabel("Year")
+        plt.ylabel("Number of Cars")
+        plt.ylim(0, yearly_sales.max() + 100)  # Set y-axis limits
+        st.pyplot(plt.gcf())
     
     elif selected_analysis == "Price Trends Over Years":
         merged_df["Car_Age"] = 2024 - merged_df["Year"]
         age_price = merged_df.groupby("Car_Age")["Price_USD"].mean()
         
-        # Use Seaborn's colorblind palette for Streamlit's native line chart
-        st.line_chart(age_price, color="#1f77b4")  # Use a colorblind-friendly color
+        # Create a line chart with y-axis limits
+        plt.figure(figsize=(10, 5))
+        sns.lineplot(x=age_price.index, y=age_price.values, marker="o", color="green")
+        plt.title("Price Trends Over Years")
+        plt.xlabel("Car Age (Years)")
+        plt.ylabel("Average Price (USD)")
+        plt.ylim(0, age_price.max() + 1000)  # Set y-axis limits
+        st.pyplot(plt.gcf())
     
     elif selected_analysis == "EV Distribution by Location":
         ev_cars = car_details[car_details["Fuel_Type"].str.contains("Electric", case=False, na=False)]
         ev_by_location = ev_cars["Location"].value_counts()
         
-        # Create a pie chart with Seaborn's colorblind palette
+        # Create a pie chart
         plt.figure(figsize=(8, 8))
         plt.pie(ev_by_location, labels=ev_by_location.index, autopct='%1.1f%%', startangle=140, colors=sns.color_palette("colorblind"))
         plt.title("EV Distribution by Location")
@@ -185,7 +285,7 @@ if page == "Data Analysis":
     elif selected_analysis == "Transmission Type in Each Location":
         transmission_by_location = car_details.groupby(["Location", "Transmission"]).size().reset_index(name="Count")
         
-        # Create a Seaborn bar plot with the colorblind palette
+        # Create a Seaborn bar plot
         plt.figure(figsize=(12, 6))
         sns.barplot(x="Location", y="Count", hue="Transmission", data=transmission_by_location, palette="colorblind")
         plt.title("Transmission Types in Each Location")
@@ -193,21 +293,19 @@ if page == "Data Analysis":
         plt.ylabel("Number of Cars")
         plt.xticks(rotation=45)
         plt.legend(title="Transmission Type")
-        
-        # Display the plot in Streamlit
         st.pyplot(plt.gcf())
     
     elif selected_analysis == "EV Listings by Year":
         ev_cars = car_details[car_details["Fuel_Type"].str.contains("Electric", case=False, na=False)]
         ev_by_year = ev_cars["Year"].value_counts().sort_index()
         
-        # Create a bar chart with Seaborn's colorblind palette
+        # Create a bar chart
         plt.figure(figsize=(10, 5))
         sns.barplot(x=ev_by_year.index, y=ev_by_year.values, palette="colorblind")
         plt.title("EV Listings by Year")
         plt.xlabel("Year")
         plt.ylabel("Number of EVs")
-        plt.xticks(rotation=45)
+        plt.ylim(0, ev_by_year.max() + 100)  # Set y-axis limits
         st.pyplot(plt.gcf())
 
 # Car Recommendation AI Page
@@ -225,14 +323,4 @@ elif page == "Car Recommendation AI":
     max_price = st.sidebar.slider("Maximum Price (USD)", int(merged_df['Price_USD'].min()), int(merged_df['Price_USD'].max()))
     
     # Filter data based on user inputs
-    filtered_df = merged_df[(merged_df['Location'] == location) & 
-                            (merged_df['Brand'] == brand) & 
-                            (merged_df['Transmission'] == transmission) & 
-                            (merged_df['Price_USD'] >= min_price) & 
-                            (merged_df['Price_USD'] <= max_price)]
-    
-    if not filtered_df.empty:
-        st.write(f"Recommended Cars in {location} for {brand} with {transmission} transmission:")
-        st.dataframe(filtered_df[['Model', 'Year', 'Mileage_km', 'Price_USD']])
-    else:
-        st.write("No cars match your criteria. Please adjust your filters.")
+    filtered_df = merged_df[(merged_df['Location'] ==
