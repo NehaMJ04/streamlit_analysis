@@ -46,7 +46,7 @@ if page == "Data Analysis":
             title="Most Common Car Brands",
             text=top_brands.values,
             color=top_brands.index,  # Use color for better distinction
-            color_discrete_sequence=plotly.colors.qualitative.Dark24 # Colorblind-friendly palette
+            color_discrete_sequence=plotly.colors.qualitative.Plotly # Colorblind-friendly palette
         )
         st.plotly_chart(fig, use_container_width=True)
     
