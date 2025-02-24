@@ -99,21 +99,16 @@ if page == "Data Analysis":
     elif selected_analysis == "Number of Cars Sold Each Year":
         yearly_sales = car_details["Year"].value_counts()
         st.bar_chart(yearly_sales)
-   elif selected_analysis == "EV Distribution by Location":
-    # Filter electric vehicles
-    ev_cars = car_details[car_details["Fuel_Type"].str.contains("Electric", case=False, na=False)]
-    ev_by_location = ev_cars["Location"].value_counts()
-    
-    # Plot EV distribution by location
-    st.bar_chart(ev_by_location)
-
-elif selected_analysis == "EV Listings by Year":
-    # Filter electric vehicles
-    ev_cars = car_details[car_details["Fuel_Type"].str.contains("Electric", case=False, na=False)]
-    ev_by_year = ev_cars["Year"].value_counts().sort_index()
-    
-    # Plot EV listings by year
-    st.bar_chart(ev_by_year)
+    elif selected_analysis == "EV Distribution by Location":
+        # Filter electric vehicles
+        ev_cars = car_details[car_details["Fuel_Type"].str.contains("Electric", case=False, na=False)]
+        ev_by_location = ev_cars["Location"].value_counts()
+        st.bar_chart(ev_by_location)
+    elif selected_analysis == "EV Listings by Year":
+        # Filter electric vehicles
+        ev_cars = car_details[car_details["Fuel_Type"].str.contains("Electric", case=False, na=False)]
+        ev_by_year = ev_cars["Year"].value_counts().sort_index()
+        st.bar_chart(ev_by_year)
 
 # Car Recommendation AI Page
 elif page == "Car Recommendation AI":
