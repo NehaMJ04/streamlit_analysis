@@ -49,7 +49,7 @@ if page == "Data Analysis":
             color_discrete_sequence=plotly.colors.qualitative.Plotly # Colorblind-friendly palette
         )
         fig.update_yaxes(
-            range=[0, top_brands.max() + 10],  # Set the y-axis range (min, max)
+            range=[3000, top_brands.max() + 10],  # Set the y-axis range (min, max)
             title="Number of Cars",  # Update y-axis title
             showgrid=True,  # Show gridlines
             gridcolor="lightgray",  # Customize gridline color
