@@ -2,8 +2,6 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.colors
-from sklearn.neighbors import NearestNeighbors
-import numpy as np
 
 # Load data
 @st.cache_data
@@ -380,39 +378,28 @@ if page == "Data Analysis":
 # Car Recommendation AI Page
 elif page == "Car Recommendation AI":
     st.title("Car Recommendation AI")
-
-    # Sidebar Filters
+    
+    # User inputs
     st.sidebar.header("Filter Options")
     location = st.sidebar.selectbox("Preferred Location", merged_df['Location'].unique())
     brand = st.sidebar.selectbox("Preferred Brand", merged_df['Brand'].unique())
     transmission = st.sidebar.selectbox("Preferred Transmission", merged_df['Transmission'].unique())
-    budget = st.sidebar.slider("Budget (USD)", int(merged_df['Price_USD'].min()), int(merged_df['Price_USD'].max()))
     
-    # Prepare Data for AI Recommendation
+    # Price range filter
+    min_price = st.sidebar.slider("Minimum Price (USD)", int(merged_df['Price_USD'].min()), int(merged_df['Price_USD'].max()))
+    max_price = st.sidebar.slider("Maximum Price (USD)", int(merged_df['Price_USD'].min()), int(merged_df['Price_USD'].max()))
+    
+    # Filter data based on user inputs
     filtered_df = merged_df[
         (merged_df['Location'] == location) & 
         (merged_df['Brand'] == brand) & 
         (merged_df['Transmission'] == transmission) & 
-        (merged_df['Price_USD'] <= budget)
+        (merged_df['Price_USD'] >= min_price) & 
+        (merged_df['Price_USD'] <= max_price)
     ]
     
     if not filtered_df.empty:
-        # Select features for recommendation
-        features = ['Price_USD', 'Mileage_km', 'Year']
-        X = merged_df[features].fillna(0)  # Handle missing values
-    
-        # Train KNN model
-        knn = NearestNeighbors(n_neighbors=5, metric='euclidean')
-        knn.fit(X)
-    
-        # Get recommendation based on user's first matching car
-        user_input = filtered_df[features].iloc[0].values.reshape(1, -1)
-        distances, indices = knn.kneighbors(user_input)
-    
-        # Get recommended cars
-        recommended_cars = merged_df.iloc[indices[0]]
-    
-        st.write(f"Recommended cars similar to your choice:")
-        st.dataframe(recommended_cars[['Model', 'Year', 'Mileage_km', 'Price_USD']])
+        st.write(f"Recommended Cars in {location} for {brand} with {transmission} transmission:")
+        st.dataframe(filtered_df[['Model', 'Year', 'Mileage_km', 'Price_USD']])
     else:
-        st.write("No cars match your criteria. Try adjusting the filters.")
+        st.write("No cars match your criteria. Please adjust your filters.")
