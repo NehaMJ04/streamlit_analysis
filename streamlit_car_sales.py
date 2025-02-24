@@ -48,6 +48,13 @@ if page == "Data Analysis":
             color=top_brands.index,  # Use color for better distinction
             color_discrete_sequence=plotly.colors.qualitative.Plotly # Colorblind-friendly palette
         )
+        fig.update_yaxes(
+            range=[0, top_brands.max() + 10],  # Set the y-axis range (min, max)
+            title="Number of Cars",  # Update y-axis title
+            showgrid=True,  # Show gridlines
+            gridcolor="lightgray",  # Customize gridline color
+            dtick=10  # Set the interval between ticks (e.g., every 10 units)
+        )
         st.plotly_chart(fig, use_container_width=True)
     
     elif selected_analysis == "Brand and Models":
